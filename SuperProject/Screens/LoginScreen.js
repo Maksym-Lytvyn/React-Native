@@ -1,3 +1,4 @@
+import { useState } from "react";
 import React from "react";
 import {
   ImageBackground,
@@ -16,45 +17,59 @@ const image = {
   uri: "https://i.pinimg.com/564x/49/b3/05/49b305f30bb9c34b85cf3088ca24defb.jpg",
 };
 
-const LoginScreen = () => (
-  <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <KeyboardAvoidingView
-      enabled
-      // behavior={Platform.OS == "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? -130 : -90}
-    >
+const LoginScreen = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <ImageBackground
-          source={image}
-          resizeMode="cover"
-          style={styles.backgroundImage}
+        <KeyboardAvoidingView
+          enabled
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? -130 : -90}
         >
-          <View style={styles.wrapper}>
-            <Text style={styles.text}>Увійти</Text>
+          <ImageBackground
+            source={image}
+            resizeMode="cover"
+            style={styles.backgroundImage}
+          >
+            <View style={styles.wrapper}>
+              <Text style={styles.text}>Увійти</Text>
 
-            <View style={styles.inputWrapper}>
-              <TextInput
-                placeholder="Адреса електронної пошти"
-                autoFocus
-                style={styles.input}
-              />
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  placeholder="Адреса електронної пошти"
+                  autoFocus
+                  style={styles.input}
+                  value={email}
+                  onChangeText={setEmail}
+                />
+              </View>
+
+              <View style={styles.inputWrapper}>
+                <TextInput
+                  placeholder="Пароль"
+                  style={styles.input}
+                  autoFocus
+                  value={password}
+                  onChangeText={setPassword}
+                />
+              </View>
+
+              <View style={styles.buttonWrapper}>
+                <Button title="Увійти" style={styles.button} onPress={() => { console.log(`Електронна скринька: ${email}, Пароль: ${password} ` ); }} />
+              </View>
+
+              <Button title="Немає акаунту? Зареєструватися" />
             </View>
-
-            <View style={styles.inputWrapper}>
-              <TextInput placeholder="Пароль" style={styles.input} autoFocus />
-            </View>
-
-            <View style={styles.buttonWrapper}>
-              <Button title="Увійти" style={styles.button} />
-            </View>
-
-            <Button title="Немає акаунту? Зареєструватися" />
-          </View>
-        </ImageBackground>
+          </ImageBackground>
+        </KeyboardAvoidingView>
       </View>
-    </KeyboardAvoidingView>
-  </TouchableWithoutFeedback>
-);
+    </TouchableWithoutFeedback>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
