@@ -1,125 +1,179 @@
-import { useState } from "react";
-import React from "react";
+import React, { useState } from "react";
 import {
-  ImageBackground,
   StyleSheet,
   Text,
   View,
   TextInput,
-  Button,
-  KeyboardAvoidingView,
-  Platform,
+  TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  KeyboardAvoidingView,
+  Image,
 } from "react-native";
 
-const image = {
-  uri: "https://i.pinimg.com/564x/49/b3/05/49b305f30bb9c34b85cf3088ca24defb.jpg",
-};
-
 const LoginScreen = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  const onPress = () => {
+    console.log(`Електронна скринька: ${email}, Пароль: ${password}`);
+  }
+
+  const handlePressOutside = () => {
+    Keyboard.dismiss();
+  };
+
 
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={handlePressOutside}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={styles.container}
+      >
       <View style={styles.container}>
-        <KeyboardAvoidingView
-          enabled
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-          keyboardVerticalOffset={Platform.OS === "ios" ? -130 : -90}
-        >
-          <ImageBackground
-            source={image}
-            resizeMode="cover"
-            style={styles.backgroundImage}
-          >
-            <View style={styles.wrapper}>
-              <Text style={styles.text}>Увійти</Text>
+        <Image
+          source={require("../images/PhotoBG.png")}
+          resizeMode="cover"
+          style={styles.image}
+        />
+        <View style={styles.form}>
+          <Text style={styles.title}>Увійти</Text>
+          <View style={styles.inputsList}>
+            <TextInput
+              style={[
+                styles.input,
+              ]}
+              placeholder="Адреса електронної пошти"
+              value={email}
+              onChangeText={setEmail}
+            />
+            <TextInput
+              style={[
+                styles.input,
+              ]}
+              placeholder="Пароль"
+              value={password}
+              onChangeText={setPassword}
+            />
+          </View>
+          <TouchableOpacity style={styles.btnRegister}>
+            <Text style={styles.textRegister} onPress={onPress}>Увійти</Text>
+          </TouchableOpacity>
 
-              <View style={styles.inputWrapper}>
-                <TextInput
-                  placeholder="Адреса електронної пошти"
-                  autoFocus
-                  style={styles.input}
-                  value={email}
-                  onChangeText={setEmail}
-                />
-              </View>
-
-              <View style={styles.inputWrapper}>
-                <TextInput
-                  placeholder="Пароль"
-                  style={styles.input}
-                  autoFocus
-                  value={password}
-                  onChangeText={setPassword}
-                />
-              </View>
-
-              <View style={styles.buttonWrapper}>
-                <Button title="Увійти" style={styles.button} onPress={() => { console.log(`Електронна скринька: ${email}, Пароль: ${password} ` ); }} />
-              </View>
-
-              <Button title="Немає акаунту? Зареєструватися" />
-            </View>
-          </ImageBackground>
-        </KeyboardAvoidingView>
+          <TouchableOpacity >
+            <Text style={styles.textLogin}>
+              Немає акаунту?{" "}
+              <Text style={styles.textLoginLink}>Зареєструватися</Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: "100%",
+    height: "100%",
   },
-  inputWrapper: {
-    backgroundColor: "#E8E8E8",
-    width: 343,
-    height: 50,
-    marginTop: 5,
-    borderRadius: 3,
-    marginLeft: 20,
-    marginRight: 20,
+
+  image: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
   },
-  backgroundImage: {
-    flex: 1,
-    justifyContent: "center",
-    width: 375,
-    height: 812,
+
+  form: {
+    backgroundColor: "#FFFFFF",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    marginTop: "auto",
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 32,
   },
-  wrapper: {
-    backgroundColor: "white",
-    borderRadius: 25,
-    height: 489,
-    marginTop: 320,
-  },
-  text: {
-    color: "black",
-    marginTop: 50,
-    fontSize: 42,
-    lineHeight: 84,
-    fontWeight: "bold",
+
+  title: {
+    fontWeight: 500,
+    fontSize: 30,
+    fontFamily: "Roboto-Medium",
+    lineHeight: 35,
     textAlign: "center",
+    color: "#212121",
+    marginBottom: 32,
   },
+
   input: {
-    width: 343,
-    padding: 25,
+    borderWidth: 1,
+    borderColor: "#E8E8E8",
+    borderRadius: 8,
+    borderStyle: "solid",
+    backgroundColor: "#F6F6F6",
+    padding: 15,
+    maxHeight: 50,
+    marginBottom: 16,
+
+    fontSize: 16,
+    fontFamily: "Roboto-Regular",
+    lineHeight: 19,
   },
-  buttonWrapper: {
+
+  inputActive: {
+    borderWidth: 1,
+    borderColor: "#FF6C00",
+    borderRadius: 8,
+    borderStyle: "solid",
+    backgroundColor: "#FFFFFF",
+    padding: 15,
+    maxHeight: 50,
+    marginBottom: 16,
+    color: "#212121",
+
+    fontSize: 16,
+    fontFamily: "Roboto-Regular",
+    lineHeight: 19,
+  },
+
+  inputsList: {
+    marginBottom: 43,
+  },
+
+  btnRegister: {
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
     backgroundColor: "#FF6C00",
     borderRadius: 100,
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20,
+    width: "100%",
+    height: 51,
+    marginBottom: 16,
   },
-  button: {
-    color: "white",
-    padding: 16,
-    width: 120,
-    height: 19,
+
+  textRegister: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontFamily: "Roboto-Regular",
+    lineHeight: 19,
+  },
+
+  textLogin: {
+    color: "#1B4371",
+    textAlign: "center",
+    alignItems: "baseline",
+    marginBottom: 45,
+  },
+
+  textLoginLink: {
+    color: "#1B4371",
+    textDecorationLine: "underline",
   },
 });
 

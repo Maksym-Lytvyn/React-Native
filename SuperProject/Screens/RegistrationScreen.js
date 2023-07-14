@@ -1,96 +1,205 @@
 import React from "react";
+import { useState } from "react";
+import { useFonts } from 'expo-font';
 import {
-  ImageBackground,
-  StyleSheet,
-  Text,
+  Image,
   View,
+  Text,
+  StyleSheet,
   TextInput,
-  Button,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 
-const image = {
-  uri: "https://i.pinimg.com/564x/49/b3/05/49b305f30bb9c34b85cf3088ca24defb.jpg",
-};
+const RegistrationScreen = () => {
 
-const RegistrationScreen = () => (
-  <View style={styles.container}>
-    <ImageBackground
-      source={image}
-      resizeMode="cover"
-      style={styles.backgroundImage}
-    >
-      <View style={styles.wrapper}>
-        <Text style={styles.text}>Реєстрація</Text>
-        <View style={styles.inputWrapper}>
-          <TextInput placeholder="Логін" style={styles.input} />
+  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  const [fontsLoaded] = useFonts({
+    'Roboto_Regular': require('../assets/fonts/Roboto-Regular.ttf'),
+  });
+
+  const onPress = () => {
+    console.log(`Логін: ${login} Електронна скринька: ${email}, Пароль: ${password}`);
+  }
+
+  const handlePressOutside = () => {
+    Keyboard.dismiss();
+  };
+
+  return (
+    <TouchableWithoutFeedback onPress={handlePressOutside}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
+        style={styles.container}
+      >
+        <View style={styles.container}>
+          <Image
+            source={require("../images/PhotoBG.png")}
+            resizeMode="cover"
+            style={styles.image}
+          />
+          <View style={styles.form}>
+            
+              <View style={styles.avatar}>
+                <TouchableOpacity style={styles.btnAddAvatar}>
+                  <Image
+                    source={require("../images/union.png")}
+                    resizeMode="contain"
+                  />
+                </TouchableOpacity>
+              </View>
+
+            <Text style={styles.title}>Реєстрація</Text>
+            <View style={styles.inputsList}>
+              <TextInput
+                style={styles.input}
+                placeholder="Логін"
+                value={login}
+                onChangeText={setLogin}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Адреса електронної пошти"
+                value={email}
+                onChangeText={setEmail}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Пароль"
+                secureTextEntry
+                value={password}
+                onChangeText={setPassword}
+
+              />
+            </View>
+            <TouchableOpacity style={styles.btnRegister} onPress={onPress}>
+              <Text style={styles.textRegister} >Зареєструватися</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text style={styles.textLogin}>Вже є акаунт? Увійти</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.inputWrapper}>
-          <TextInput placeholder="Адреса електронної пошти" style={styles.input} />
-        </View>
-        <View style={styles.inputWrapper}>
-          <TextInput placeholder="Пароль" style={styles.input} />
-        </View>
-        
-        <View style={styles.buttonWrapper}>
-          <Button title="Зареєструватися" style={styles.button} />
-        </View>
-        
-        <Button title="Вже є аккаунт? Увійти" />
-      </View>
-    </ImageBackground>
-  </View>
-);
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  inputWrapper: {
-    backgroundColor: '#E8E8E8',
-    width: 343,
-    height: 50,
-    marginTop: 5,
-    borderRadius: 3,
-    marginLeft: 20,
-    marginRight: 20,
+
+  image: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
   },
-  backgroundImage: {
-    flex: 1,
-    justifyContent: "center",
-    width: 375,
-    height: 812,
+
+  form: {
+    backgroundColor: "#FFFFFF",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    marginTop: "auto",
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 92,
+    paddingBottom: 45,
   },
-  wrapper: {
-    backgroundColor: "white",
-    borderRadius: 25,
-    height: 549,
-    marginTop: 260,
-  },
-  text: {
-    color: "black",
-    marginTop: 50,
-    fontSize: 42,
-    lineHeight: 84,
-    fontWeight: "bold",
-    textAlign: "center",
-  },
-  input: {
-    width: 343,
-    padding: 25,
-  },
-  buttonWrapper: {
-    backgroundColor: '#FF6C00',
-    borderRadius: 100,
-    marginTop: 20,
-    marginLeft: 20,
-    marginRight: 20,
-  },
-  button: {
-    color: "white",
-    padding: 16,
+
+  avatar: {
+    position: "absolute",
+    top: -60,
+    alignSelf: "center",
     width: 120,
-    height: 19,
+    height: 120,
+    backgroundColor: "#f6f6f6",
+    borderRadius: 16,
+  },
+
+  btnAddAvatar: {
+    position: "absolute",
+    bottom: 14,
+    right: -12.5,
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
+    width: 25,
+    height: 25,
+    backgroundColor: "transparent",
+    borderRadius: 50,
+    borderWidth: 1,
+    borderColor: "#FF6C00",
+  },
+
+  btnAvatarText: {
+    color: "#FF6C00",
+    fontSize: 18,
+    fontFamily: "Roboto-Black",
+    lineHeight: 18,
+  },
+
+  title: {
+    fontFamily: "Roboto-Medium",
+    fontWeight: 500,
+    fontSize: 30,
+    lineHeight: 35,
+    textAlign: "center",
+    color: "#212121",
+    marginBottom: 32,
+  },
+
+  input: {
+    borderWidth: 1,
+    borderColor: "#E8E8E8",
+    borderRadius: 8,
+    borderStyle: "solid",
+    backgroundColor: "#F6F6F6",
+    padding: 15,
+    maxHeight: 50,
+    marginBottom: 16,
+
+    fontSize: 16,
+    fontFamily: 'Roboto-Regular',
+    lineHeight: 19,
+  },
+
+  inputsList: {
+    marginBottom: 43,
+  },
+
+  btnRegister: {
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
+    backgroundColor: "#FF6C00",
+    borderRadius: 100,
+    width: "100%",
+    height: 51,
+    marginBottom: 16,
+  },
+
+  textRegister: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontFamily: 'Roboto-Regular',
+    lineHeight: 19,
+  },
+
+  textLogin: {
+    color: "#1B4371",
+    textAlign: "center",
   },
 });
 
 export default RegistrationScreen;
+
