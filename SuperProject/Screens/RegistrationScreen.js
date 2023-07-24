@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
-import { useFonts } from 'expo-font';
+import { useNavigation } from '@react-navigation/native';
+import { useFonts } from "expo-font";
 import {
   Image,
   View,
@@ -15,23 +16,24 @@ import {
 } from "react-native";
 
 const RegistrationScreen = () => {
+  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const [login, setLogin] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+  const navigation = useNavigation();
 
   const [fontsLoaded] = useFonts({
-    'Roboto_Regular': require('../assets/fonts/Roboto-Regular.ttf'),
+    Roboto_Regular: require("../assets/fonts/Roboto-Regular.ttf"),
   });
 
   const onPress = () => {
-    console.log(`Логін: ${login} Електронна скринька: ${email}, Пароль: ${password}`);
-  }
+    navigation.navigate("Home", { login: login, email: email, password: password })
+  };
 
   const handlePressOutside = () => {
     Keyboard.dismiss();
   };
+
 
   return (
     <TouchableWithoutFeedback onPress={handlePressOutside}>
@@ -46,15 +48,14 @@ const RegistrationScreen = () => {
             style={styles.image}
           />
           <View style={styles.form}>
-            
-              <View style={styles.avatar}>
-                <TouchableOpacity style={styles.btnAddAvatar}>
-                  <Image
-                    source={require("../images/union.png")}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-              </View>
+            <View style={styles.avatar}>
+              <TouchableOpacity style={styles.btnAddAvatar}>
+                <Image
+                  source={require("../images/union.png")}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            </View>
 
             <Text style={styles.title}>Реєстрація</Text>
             <View style={styles.inputsList}>
@@ -76,13 +77,15 @@ const RegistrationScreen = () => {
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
-
               />
             </View>
             <TouchableOpacity style={styles.btnRegister} onPress={onPress}>
-              <Text style={styles.textRegister} >Зареєструватися</Text>
+              <Text style={styles.textRegister}>Зареєструватися</Text>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity
+              title="Go to Login"
+              onPress={() => navigation.navigate("Login")}
+            >
               <Text style={styles.textLogin}>Вже є акаунт? Увійти</Text>
             </TouchableOpacity>
           </View>
@@ -169,7 +172,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
 
     fontSize: 16,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: "Roboto-Regular",
     lineHeight: 19,
   },
 
@@ -191,7 +194,7 @@ const styles = StyleSheet.create({
   textRegister: {
     color: "#FFFFFF",
     fontSize: 16,
-    fontFamily: 'Roboto-Regular',
+    fontFamily: "Roboto-Regular",
     lineHeight: 19,
   },
 
@@ -202,4 +205,3 @@ const styles = StyleSheet.create({
 });
 
 export default RegistrationScreen;
-
