@@ -1,14 +1,14 @@
 import React from "react";
-import PostsScreen from "./PostsScreen";
-import CreatePostsScreen from "./CreatePostsScreen";
-import ProfileScreen from "./ProfileScreen";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import ProfileScreen from "../mainScreens/ProfileScreen";
+import CreatePostsScreen from "../mainScreens/CreatePostsScreen";
+import PostsScreen from "../mainScreens/PostsScreen";
 
 const MainBottomTabs = createBottomTabNavigator();
 
-const Home = ({ navigation }) => {
+const HomeTabs = ({ navigation }) => {
   return (
     <MainBottomTabs.Navigator
       screenOptions={({ route }) => ({
@@ -132,4 +132,5 @@ const tabBarStyle = {
   justifyContent: "center",
   alignItems: "center",
 };
-export default Home;
+
+export default HomeTabs;
