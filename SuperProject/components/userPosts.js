@@ -1,6 +1,8 @@
+import uuid from 'react-native-uuid';
+
 export const userPosts = [
   {
-    id: "001",
+    id: uuid.v4(),
     title: "Ліс",
     image: require("../img/post-images/post-1.png"),
     location: {
@@ -13,7 +15,7 @@ export const userPosts = [
     likes: 153,
   },
   {
-    id: "002",
+    id: uuid.v4(),
     title: "Захід в Чорному морі",
     image: require("../img/post-images/post-2.png"),
     location: {
@@ -26,7 +28,7 @@ export const userPosts = [
     likes: 200,
   },
   {
-    id: "003",
+    id: uuid.v4(),
     title: "Старий будинок у Венеції",
     image: require("../img/post-images/post-3.png"),
     location: {

@@ -209,7 +209,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
     marginBottom: 62,
     borderRadius: 8,
-    border: "1px solid #E8E8E8",
+    borderWidth: 1,
+    borderColor: "##E8E8E8",
+    borderCurve: 'solid',
     position: "relative",
   },
 
