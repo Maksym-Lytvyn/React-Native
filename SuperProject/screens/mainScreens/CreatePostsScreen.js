@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
-import uuid from 'react-native-uuid';
 
 import {
   TouchableWithoutFeedback,
@@ -78,7 +77,7 @@ const CreatePostsScreen = ({ navigation }) => {
     console.log("SENDING NEW POST =====>", postLocation);
     console.log("postLocationGPS", postLocationGPS);
     const newPost = {
-      id: uuid.v4(),
+      id: 2888,
       title: postName,
       image: photo,
       comments: 0,

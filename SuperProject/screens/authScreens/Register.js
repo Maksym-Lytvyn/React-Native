@@ -209,9 +209,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
     marginBottom: 62,
     borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "##E8E8E8",
-    borderCurve: 'solid',
+    border: "1px solid #E8E8E8",
     position: "relative",
   },
 
